@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core pages -->
+  <url><loc>https://arcada.dz/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://arcada.dz/catalogue</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://arcada.dz/preview</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Category pages -->
+  <url><loc>https://arcada.dz/catalogue/silos</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/atelier</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/ducal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/leaf</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/gonos</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/chic</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://arcada.dz/catalogue/kronfel</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/casbah</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/yasmine</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Product pages -->
+  <url><loc>https://arcada.dz/catalogue/silos/silos-plain</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/silos/silos-dec</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/atelier/atelier-r1</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/atelier/atelier-dec</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/ducal/ducal-plain</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/ducal/ducal-dec</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/leaf/leaf-r1</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/gonos/gonos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/chic/chic-r1</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/chic/chic-r2</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://arcada.dz/catalogue/kronfel/kronfel</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://arcada.dz/catalogue/casbah/casbah</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://arcada.dz/catalogue/yasmine/yasmine</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>

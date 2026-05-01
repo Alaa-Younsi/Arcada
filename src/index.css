@@ -1,0 +1,265 @@
+/* =============================================
+   CSS VARIABLES — DESIGN TOKENS
+   ============================================= */
+:root {
+  --color-bg: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-surface-warm: #F2EDE6;
+  --color-border: #E8E2D9;
+  --color-border-dark: #C8BFB0;
+  --color-accent: #8B7355;
+  --color-accent-light: #B5956A;
+  --color-dark: #1A1714;
+  --color-text: #2D2926;
+  --color-text-muted: #6B6459;
+  --color-white: #ffffff;
+  --color-stone: #9E9189;
+}
+
+/* =============================================
+   TAILWIND BASE
+   ============================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   BASE RESET
+   ============================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* =============================================
+   CUSTOM SCROLLBAR
+   ============================================= */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-warm);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-light);
+}
+
+/* =============================================
+   TEXT SELECTION
+   ============================================= */
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+::-moz-selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-dark);
+}
+
+/* =============================================
+   MARQUEE
+   ============================================= */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track-reverse {
+  display: inline-flex;
+  animation: marquee-reverse 30s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* =============================================
+   UTILITY CLASSES
+   ============================================= */
+.font-display {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+}
+
+.font-sans-ui {
+  font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.border-stone {
+  border-color: var(--color-border);
+}
+
+/* Underline reveal animation */
+.underline-reveal {
+  position: relative;
+}
+.underline-reveal::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: width 0.4s ease;
+}
+.underline-reveal:hover::after {
+  width: 100%;
+}
+
+/* =============================================
+   PAGE TRANSITION WRAPPER
+   ============================================= */
+.page-wrapper {
+  min-height: 100vh;
+}
+
+/* =============================================
+   PRICE RANGE SLIDER
+   ============================================= */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-border);
+  height: 2px;
+  border-radius: 1px;
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* =============================================
+   NAV LINK — underline slides from left
+   ============================================= */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.28s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* =============================================
+   ARCADA IMAGE HOVER ZOOM
+   ============================================= */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.img-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* =============================================
+   SECTION DIVIDER
+   ============================================= */
+.section-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent);
+  margin: 1rem auto;
+}
+
+/* =============================================
+   SCROLLBAR HIDDEN UTILITY
+   ============================================= */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalogue": "Catalogue",
+    "collections": "Collections",
+    "visualizer": "Visualizer"
+  },
+  "hero": {
+    "tagline": "Luxury Ceramic Surfaces",
+    "title": "The Art of the Surface",
+    "subtitle": "Discover ARCADA — premium ceramic surfaces crafted for architecture and interior design.",
+    "ctaVisualizer": "Open the Visualizer",
+    "ctaCatalogue": "View Catalogue",
+    "visualizerTeaser": "Preview our tiles in your space in real time"
+  },
+  "catalogue": {
+    "title": "Our Collections",
+    "subtitle": "Explore all ARCADA products — 9 collections, each a unique ceramic universe.",
+    "allCollections": "All Collections",
+    "filterBy": "Filter by collection",
+    "products": "products",
+    "colorsAvailable": "colors available",
+    "viewDetails": "View details",
+    "noPrice": "Request a quote",
+    "size": "Size",
+    "finish": "Finish",
+    "variants": "Colors & Variants",
+    "selectColor": "Select a color",
+    "previewInRoom": "Preview in my space",
+    "relatedProducts": "In the same collection"
+  },
+  "visualizer": {
+    "title": "Room Visualizer",
+    "subtitle": "Choose a product and color, then see it on your wall.",
+    "step1": "1 · Choose a collection",
+    "step2": "2 · Choose a product",
+    "step3": "3 · Choose a color",
+    "step4": "4 · Choose a zone",
+    "combine": "Combine colors",
+    "addToWall": "Apply to wall",
+    "addToFloor": "Apply to floor",
+    "addToAccent": "Apply to accent wall",
+    "reset": "Reset",
+    "download": "Save image",
+    "requestQuote": "Request a quote for this selection",
+    "selectedProducts": "Your selection",
+    "zone": {
+      "wall": "Main Wall",
+      "floor": "Floor",
+      "accent": "Accent Panel"
+    }
+  },
+  "product": {
+    "description": "Description",
+    "size": "Size",
+    "finish": "Finish",
+    "reference": "Reference",
+    "colors": "Colors",
+    "relatedProducts": "You may also like",
+    "view": "View Collection",
+    "category": "Collection"
+  },
+  "contact": {
+    "cta": "Get in touch",
+    "interested": "Interested in this product?",
+    "reachOut": "Contact us to get pricing and availability.",
+    "email": "contact@arcada.dz",
+    "phone": "+213 550 24 24 54",
+    "address": "Sebala, Draria, Alger, Algérie"
+  },
+  "footer": {
+    "tagline": "Algeria's exclusive ceramic surface manufacturer — we design, produce and sell every piece ourselves.",
+    "rights": "© 2025 ARCADA. All rights reserved.",
+    "quickLinks": "Navigation",
+    "followUs": "Follow us"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "notFound": "Page Not Found",
+    "notFoundSub": "The page you are looking for does not exist.",
+    "goHome": "Back to Home",
+    "discover": "Discover",
+    "viewAll": "View All",
+    "collection": "Collection",
+    "backTo": "Back to"
+  }
+}

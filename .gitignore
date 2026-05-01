@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+dist/
+dist-server/
+
+# Python env (used locally for tooling)
+.venv/
+__pycache__/
+*.pyc
+
+# env
+.env
+.env.local
+.env.*.local
+
+# editor
+.vscode/
+.idea/
+
+# logs
+*.log
+bun.lockb
+
+# OS
+.DS_Store
+Thumbs.db

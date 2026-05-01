@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "catalogue": "Catalogue",
+    "collections": "Collections",
+    "visualizer": "Visualiseur"
+  },
+  "hero": {
+    "tagline": "Surfaces Céramiques de Prestige",
+    "title": "L'Art de la Surface",
+    "subtitle": "Découvrez ARCADA — des surfaces céramiques premium conçues pour l'architecture et le design d'intérieur.",
+    "ctaVisualizer": "Ouvrir le Visualiseur",
+    "ctaCatalogue": "Voir le Catalogue",
+    "visualizerTeaser": "Prévisualisez nos carreaux dans votre espace en temps réel"
+  },
+  "catalogue": {
+    "title": "Nos Collections",
+    "subtitle": "Explorez tous les produits ARCADA — 9 collections, chacune un univers céramique unique.",
+    "allCollections": "Toutes les collections",
+    "filterBy": "Filtrer par collection",
+    "products": "produits",
+    "colorsAvailable": "couleurs disponibles",
+    "viewDetails": "Voir les détails",
+    "noPrice": "Demander un devis",
+    "size": "Format",
+    "finish": "Finition",
+    "variants": "Couleurs & Variantes",
+    "selectColor": "Choisir une couleur",
+    "previewInRoom": "Prévisualiser dans mon espace",
+    "relatedProducts": "Dans la même collection"
+  },
+  "visualizer": {
+    "title": "Visualiseur de Pièce",
+    "subtitle": "Choisissez un produit et une couleur, puis visualisez-le sur vos murs.",
+    "step1": "1 · Choisir une collection",
+    "step2": "2 · Choisir un produit",
+    "step3": "3 · Choisir une couleur",
+    "step4": "4 · Choisir une zone",
+    "combine": "Combiner les couleurs",
+    "addToWall": "Appliquer au mur",
+    "addToFloor": "Appliquer au sol",
+    "addToAccent": "Appliquer au mur accent",
+    "reset": "Réinitialiser",
+    "download": "Enregistrer l'image",
+    "requestQuote": "Demander un devis pour cette sélection",
+    "selectedProducts": "Votre sélection",
+    "zone": {
+      "wall": "Mur principal",
+      "floor": "Sol",
+      "accent": "Panneau accent"
+    }
+  },
+  "product": {
+    "description": "Description",
+    "size": "Format",
+    "finish": "Finition",
+    "reference": "Référence",
+    "colors": "Couleurs",
+    "relatedProducts": "Vous aimerez aussi",
+    "view": "Voir la collection",
+    "category": "Collection"
+  },
+  "contact": {
+    "cta": "Nous contacter",
+    "interested": "Intéressé par ce produit ?",
+    "reachOut": "Contactez-nous pour obtenir les tarifs et la disponibilité.",
+    "email": "contact@arcada.dz",
+    "phone": "+213 550 24 24 54",
+    "address": "Sebala, Draria, Alger, Algérie"
+  },
+  "footer": {
+    "tagline": "Fabricant exclusif algérien de surfaces céramiques — nous concevons, produisons et vendons chaque pièce nous-mêmes.",
+    "rights": "© 2025 ARCADA. Tous droits réservés.",
+    "quickLinks": "Navigation",
+    "followUs": "Nous suivre"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "notFound": "Page introuvable",
+    "notFoundSub": "La page que vous recherchez n'existe pas.",
+    "goHome": "Retour à l'accueil",
+    "discover": "Découvrir",
+    "viewAll": "Tout voir",
+    "collection": "Collection",
+    "backTo": "Retour à"
+  }
+}
