@@ -1,12 +1,13 @@
 export type Lang = 'en' | 'fr' | 'ar';
+export type RoomId = 'bathroom' | 'living-room' | 'bedroom' | 'kitchen';
 
 export interface ColorVariant {
   id: string;
   name: Record<Lang, string>;
   hex: string;
   image: string;
-  previewTexture: string;
-  roomImage?: string;
+  // Optional per-room override. Falls back to /previews/{roomId}/{id}.jpg
+  roomImages?: Partial<Record<RoomId, string>>;
 }
 
 export interface CatalogueProduct {

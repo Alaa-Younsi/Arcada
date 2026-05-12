@@ -46,10 +46,19 @@ export default function Home() {
           muted
           loop
           playsInline
+          poster="/image1.jpg"
+          onError={(e) => { (e.target as HTMLVideoElement).style.display = 'none'; }}
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/background.mp4" type="video/mp4" />
         </video>
+        {/* Static fallback shown when video fails or is absent */}
+        <img
+          src="/image1.jpg"
+          alt="ARCADA"
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+          aria-hidden="true"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-dark/70 via-dark/40 to-dark/10" />
 
         {/* Pause / Resume button */}

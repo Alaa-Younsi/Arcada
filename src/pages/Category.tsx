@@ -162,7 +162,7 @@ export default function Category() {
                 to={`/catalogue/${cat.slug}`}
                 className="flex-shrink-0 group"
               >
-                <div className="w-40 h-40 overflow-hidden bg-surface relative">
+                <div className="w-40 h-40 overflow-hidden bg-surface relative rounded-xl">
                   <img
                     src={cat.image}
                     alt={cat.name[lang]}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
@@ -78,13 +78,21 @@ export default function Product() {
     productSlug: string;
   }>();
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const lang = i18n.language as Lang;
 
   const product = getProductBySlug(productSlug);
   const category = CATEGORIES.find((c) => c.slug === categorySlug);
 
-  if (!product || !category) {
+  // ✅ Always call hooks before any conditional return
+  const [selectedVariant, setSelectedVariant] = useState<ColorVariant | null>(
+    product?.variants[0] ?? null
+  );
+
+  const relatedProducts = product
+    ? getProductsByCategory(categorySlug).filter((p) => p.slug !== productSlug).slice(0, 3)
+    : [];
+
+  if (!product || !category || !selectedVariant) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
         <p className="font-display text-dark/30 text-3xl font-light">Produit introuvable</p>
@@ -94,11 +102,6 @@ export default function Product() {
       </div>
     );
   }
-
-  const [selectedVariant, setSelectedVariant] = useState<ColorVariant>(product.variants[0]);
-  const relatedProducts = getProductsByCategory(categorySlug)
-    .filter((p) => p.slug !== productSlug)
-    .slice(0, 3);
 
   return (
     <>
@@ -222,7 +225,7 @@ export default function Product() {
             </Link>
 
             <a
-              href={`https://wa.me/213XXXXXXXXX?text=${encodeURIComponent(`Bonjour ARCADA,\n\nJe suis intéressé par : ${product.name[lang]} · ${selectedVariant.name[lang]}\n\nMerci de me contacter.`)}`}
+              href={`https://wa.me/213550242454?text=${encodeURIComponent(`Bonjour ARCADA,\n\nJe suis intéressé par : ${product.name[lang]} · ${selectedVariant.name[lang]}\n\nMerci de me contacter.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full rounded-2xl py-4 border border-dark text-dark font-sans text-xs uppercase tracking-[0.25em] text-center hover:bg-surface-warm transition-colors"

@@ -78,9 +78,8 @@ export default function Catalogue() {
     sectionRefs.current[slug]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const displayedCategories = activeSlug
-    ? CATEGORIES.filter((c) => c.slug === activeSlug)
-    : CATEGORIES;
+  // Always render all categories; setActiveSlug is only used for sidebar highlight
+  const displayedCategories = CATEGORIES;
 
   return (
     <>

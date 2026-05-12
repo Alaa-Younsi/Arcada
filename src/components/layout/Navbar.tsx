@@ -75,8 +75,10 @@ export function Navbar() {
               {/* LEFT � desktop nav links */}
               <div className="flex items-center">
                 <nav className="hidden lg:flex items-center gap-8">
-                  <div onMouseEnter={openMega} onMouseLeave={closeMega}>
-                    <button className={linkCls()}>{t('nav.collections')}</button>
+                  <div onMouseEnter={openMega} onMouseLeave={closeMega} className="relative">
+                    <NavLink to="/catalogue" className={({ isActive }) => linkCls(isActive)}>
+                      {t('nav.collections')}
+                    </NavLink>
                   </div>
                   <NavLink to="/catalogue" className={({ isActive }) => linkCls(isActive)}>
                     {t('nav.catalogue')}

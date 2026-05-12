@@ -44,6 +44,13 @@
     "download": "Save image",
     "requestQuote": "Request a quote for this selection",
     "selectedProducts": "Your selection",
+    "chooseRoom": "0 · Choose a room",
+    "rooms": {
+      "bathroom": "Bathroom",
+      "living-room": "Living Room",
+      "bedroom": "Bedroom",
+      "kitchen": "Kitchen"
+    },
     "zone": {
       "wall": "Main Wall",
       "floor": "Floor",

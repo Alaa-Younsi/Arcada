@@ -19,7 +19,7 @@ i18n
     defaultNS: 'translation',
     detection: {
       order: ['localStorage'],
-      lookupLocalStorage: 'nw_lang',
+      lookupLocalStorage: 'arcada_lang',
       caches: ['localStorage'],
     },
     interpolation: {
@@ -34,7 +34,7 @@ i18n.on('languageChanged', (lng) => {
 });
 
 // Set initial direction
-const savedLang = localStorage.getItem('nw_lang') || 'en';
+const savedLang = localStorage.getItem('arcada_lang') || 'en';
 document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
 document.documentElement.lang = savedLang;
 

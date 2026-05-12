@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
 
   const handleChange = (code: string) => {
     i18n.changeLanguage(code);
-    localStorage.setItem('nw_lang', code);
+    localStorage.setItem('arcada_lang', code);
     document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = code;
   };
@@ -23,10 +23,10 @@ export function LanguageSwitcher() {
         <button
           key={lang.code}
           onClick={() => handleChange(lang.code)}
-          className={`px-2 py-1 font-mono text-xs uppercase tracking-widest transition-colors ${
+          className={`px-2 py-1 font-sans text-[11px] uppercase tracking-[0.2em] transition-colors ${
             current === lang.code
-              ? 'text-[#FF0000] border-b border-[#FF0000]'
-              : 'text-[#888888] hover:text-white'
+              ? 'text-[#8B7355] border-b border-[#8B7355]'
+              : 'text-[#6B6459] hover:text-[#1A1714]'
           }`}
           aria-label={`Switch to ${lang.label}`}
         >

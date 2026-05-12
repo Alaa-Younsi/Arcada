@@ -1,20 +1,52 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { RotateCcw, Mail, ChevronRight } from 'lucide-react';
+import { RotateCcw, Mail, ChevronRight, Bath, Sofa, BedDouble, UtensilsCrossed, type LucideIcon } from 'lucide-react';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { CATEGORIES, PRODUCTS, getProductsByCategory } from '@/data/catalogue';
-import type { Lang, ColorVariant, CatalogueProduct } from '@/types';
+import type { Lang, RoomId, ColorVariant, CatalogueProduct } from '@/types';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Each variant has an AI-generated room photo at /previews/{variant.id}.jpg
-// If the variant has an explicit roomImage set, that path is used instead.
-// ─────────────────────────────────────────────────────────────────────────────
+// Room config
 
-function getRoomImage(variant: ColorVariant | null): string {
-  if (!variant) return '/rooms/room-modern.png';
-  return variant.roomImage ?? `/previews/${variant.id}.jpg`;
+interface RoomConfig {
+  id: RoomId;
+  label: Record<Lang, string>;
+  defaultImage: string;
+  Icon: LucideIcon;
+}
+
+const ROOMS: RoomConfig[] = [
+  {
+    id: 'bathroom',
+    label: { en: 'Bathroom', fr: 'Salle de bain', ar: 'الحمام' },
+    defaultImage: '/rooms/bathroom-default.jpg',
+    Icon: Bath,
+  },
+  {
+    id: 'living-room',
+    label: { en: 'Living Room', fr: 'Salon', ar: 'غرفة المعيشة' },
+    defaultImage: '/rooms/living-room-default.jpg',
+    Icon: Sofa,
+  },
+  {
+    id: 'bedroom',
+    label: { en: 'Bedroom', fr: 'Chambre', ar: 'غرفة النوم' },
+    defaultImage: '/rooms/bedroom-default.jpg',
+    Icon: BedDouble,
+  },
+  {
+    id: 'kitchen',
+    label: { en: 'Kitchen', fr: 'Cuisine', ar: 'المطبخ' },
+    defaultImage: '/rooms/kitchen-default.jpg',
+    Icon: UtensilsCrossed,
+  },
+];
+
+function getRoomImage(variant: ColorVariant | null, roomId: RoomId): string {
+  if (!variant) return ROOMS.find((r) => r.id === roomId)!.defaultImage;
+  if (variant.roomImages?.[roomId]) return variant.roomImages[roomId]!;
+  return `/previews/${roomId}/${variant.id}.jpg`;
 }
 
 const fadeUp = {
@@ -23,12 +55,14 @@ const fadeUp = {
   exit: { opacity: 0, y: -6, transition: { duration: 0.15 } },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-
 export default function Preview() {
   const { t, i18n } = useTranslation();
   const [searchParams] = useSearchParams();
   const lang = i18n.language as Lang;
+
+  const [selectedRoomId, setSelectedRoomId] = useState<RoomId>(() => {
+    return (localStorage.getItem('arcada_preview_room') as RoomId) ?? 'bathroom';
+  });
 
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<CatalogueProduct | null>(null);
@@ -39,7 +73,10 @@ export default function Preview() {
     [selectedCategorySlug],
   );
 
-  // Pre-populate from URL params (?product=slug&variant=id)
+  useEffect(() => {
+    localStorage.setItem('arcada_preview_room', selectedRoomId);
+  }, [selectedRoomId]);
+
   useEffect(() => {
     const productSlug = searchParams.get('product');
     const variantId = searchParams.get('variant');
@@ -61,20 +98,23 @@ export default function Preview() {
   };
 
   const buildWhatsApp = () => {
-    const base = 'https://wa.me/213XXXXXXXXX';
+    const base = 'https://wa.me/213550242454';
     if (!selectedProduct || !selectedVariant) return base;
+    const roomLabel = ROOMS.find((r) => r.id === selectedRoomId)?.label[lang] ?? selectedRoomId;
     const text = [
       'Bonjour ARCADA,',
       '',
       'Je suis intéressé par le produit suivant :',
       `- ${selectedProduct.name[lang]} · ${selectedVariant.name[lang]}`,
+      `- Pièce : ${roomLabel}`,
       '',
       'Merci de me contacter pour un devis.',
     ].join('\n');
     return `${base}?text=${encodeURIComponent(text)}`;
   };
 
-  const roomImage = getRoomImage(selectedVariant);
+  const roomImage = getRoomImage(selectedVariant, selectedRoomId);
+  const currentRoom = ROOMS.find((r) => r.id === selectedRoomId)!;
 
   return (
     <>
@@ -86,7 +126,6 @@ export default function Preview() {
       <div className="min-h-screen bg-[#FAF8F5] pt-24 pb-20">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-16">
 
-          {/* Page header */}
           <div className="mb-10">
             <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-accent mb-3">
               {t('visualizer.title')}
@@ -99,13 +138,40 @@ export default function Preview() {
             </h1>
           </div>
 
-          {/* Main layout: controls left, room image right */}
+          {/* Room selector — full width above split */}
+          <div className="mb-10">
+            <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-4">
+              {lang === 'fr' ? '0 · Choisir une pièce' : lang === 'ar' ? '٠ · اختر الغرفة' : '0 · Choose a room'}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {ROOMS.map((room) => {
+                const Icon = room.Icon;
+                const isActive = selectedRoomId === room.id;
+                return (
+                  <button
+                    key={room.id}
+                    onClick={() => setSelectedRoomId(room.id)}
+                    className={`flex items-center gap-3 px-5 py-4 border transition-all duration-200 text-left ${
+                      isActive
+                        ? 'border-dark bg-dark text-white'
+                        : 'border-[#E8E2D9] bg-white text-dark hover:border-dark'
+                    }`}
+                  >
+                    <Icon size={16} strokeWidth={1.5} />
+                    <span className="font-sans text-[11px] uppercase tracking-[0.18em] leading-tight">
+                      {room.label[lang]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="flex flex-col-reverse lg:flex-row gap-10">
 
-            {/* ─── LEFT PANEL ──────────────────────────────────────────── */}
+            {/* Left panel */}
             <aside className="lg:w-[38%] flex-shrink-0 space-y-8">
 
-              {/* Step 1 — Collection */}
               <section>
                 <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3">
                   {t('visualizer.step1')}
@@ -119,7 +185,7 @@ export default function Preview() {
                         setSelectedProduct(null);
                         setSelectedVariant(null);
                       }}
-                      className={`px-3 py-1.5 rounded-2xl font-sans text-[11px] uppercase tracking-wider border transition-all duration-200 ${
+                      className={`px-3 py-1.5 font-sans text-[11px] uppercase tracking-wider border transition-all duration-200 ${
                         selectedCategorySlug === cat.slug
                           ? 'bg-dark text-white border-dark'
                           : 'text-muted border-[#E8E2D9] hover:border-dark hover:text-dark'
@@ -131,7 +197,6 @@ export default function Preview() {
                 </div>
               </section>
 
-              {/* Step 2 — Product */}
               <AnimatePresence mode="wait">
                 {selectedCategorySlug && (
                   <motion.section
@@ -152,7 +217,7 @@ export default function Preview() {
                             setSelectedProduct(product);
                             setSelectedVariant(product.variants[0] ?? null);
                           }}
-                          className={`text-left px-4 py-3 rounded-2xl border font-sans text-sm transition-all duration-200 ${
+                          className={`text-left px-4 py-3 border font-sans text-sm transition-all duration-200 ${
                             selectedProduct?.id === product.id
                               ? 'border-dark bg-dark text-white'
                               : 'border-[#E8E2D9] text-dark hover:border-dark bg-white'
@@ -169,7 +234,6 @@ export default function Preview() {
                 )}
               </AnimatePresence>
 
-              {/* Step 3 — Color */}
               <AnimatePresence mode="wait">
                 {selectedProduct && (
                   <motion.section
@@ -209,7 +273,6 @@ export default function Preview() {
                 )}
               </AnimatePresence>
 
-              {/* CTA section */}
               <AnimatePresence>
                 {selectedVariant && (
                   <motion.section
@@ -220,11 +283,10 @@ export default function Preview() {
                     transition={{ duration: 0.4 }}
                     className="border-t border-[#E8E2D9] pt-6"
                   >
-                    {/* Summary */}
                     <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-muted mb-3">
                       {t('visualizer.selectedProducts')}
                     </p>
-                    <div className="flex items-center gap-3 mb-6 p-4 rounded-2xl bg-surface-warm">
+                    <div className="flex items-center gap-3 mb-6 p-4 bg-[#F2EDE6]">
                       <span
                         className="w-8 h-8 rounded-full flex-shrink-0 border border-[#E8E2D9]"
                         style={{ backgroundColor: selectedVariant.hex }}
@@ -237,6 +299,9 @@ export default function Preview() {
                           {selectedVariant.name[lang]}
                           {selectedProduct && ` · ${selectedProduct.size}`}
                         </p>
+                        <p className="font-sans text-[10px] text-accent mt-0.5 uppercase tracking-wide">
+                          {currentRoom.label[lang]}
+                        </p>
                       </div>
                       <ChevronRight size={14} className="text-muted flex-shrink-0 ml-auto" />
                     </div>
@@ -244,16 +309,16 @@ export default function Preview() {
                     <div className="flex gap-3">
                       <button
                         onClick={handleReset}
-                        className="flex items-center gap-2 px-4 py-3 rounded-2xl border border-[#E8E2D9] font-sans text-[10px] uppercase tracking-wider text-muted hover:border-dark hover:text-dark transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 border border-[#E8E2D9] font-sans text-[10px] uppercase tracking-wider text-muted hover:border-dark hover:text-dark transition-colors"
                       >
                         <RotateCcw size={11} />
                         {t('visualizer.reset')}
                       </button>
                       <a
                         href={buildWhatsApp()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl bg-accent text-white font-sans text-[10px] uppercase tracking-wider hover:bg-dark transition-colors duration-300"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-accent text-white font-sans text-[10px] uppercase tracking-wider hover:bg-dark transition-colors duration-300"
                       >
                         <Mail size={11} />
                         {t('contact.cta')}
@@ -264,16 +329,19 @@ export default function Preview() {
               </AnimatePresence>
             </aside>
 
-            {/* ─── RIGHT PANEL: Room image ──────────────────────────────── */}
+            {/* Right panel */}
             <main className="lg:flex-1 min-w-0">
               <div className="lg:sticky lg:top-28">
-                {/* Image swap — crossfade between room variants */}
-                <div className="relative overflow-hidden rounded-2xl aspect-[4/3] bg-[#E8E2D9]">
+                <div className="relative overflow-hidden aspect-[4/3] bg-[#E8E2D9]">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={roomImage}
                       src={roomImage}
-                      alt={selectedVariant ? selectedVariant.name[lang] : 'Room preview'}
+                      alt={
+                        selectedVariant
+                          ? `${selectedProduct?.name[lang]} · ${selectedVariant.name[lang]} — ${currentRoom.label[lang]}`
+                          : currentRoom.label[lang]
+                      }
                       className="absolute inset-0 w-full h-full object-cover"
                       fetchPriority="high"
                       decoding="async"
@@ -284,7 +352,6 @@ export default function Preview() {
                     />
                   </AnimatePresence>
 
-                  {/* Hint overlay when nothing selected */}
                   {!selectedVariant && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-dark/20 pointer-events-none">
                       <p className="font-sans text-white text-xs uppercase tracking-[0.4em] text-center px-8 drop-shadow">
@@ -297,12 +364,11 @@ export default function Preview() {
                     </div>
                   )}
 
-                  {/* Selected variant label */}
                   {selectedVariant && (
                     <motion.div
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-2"
+                      className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2"
                     >
                       <span
                         className="w-3.5 h-3.5 rounded-full border border-[#E8E2D9] flex-shrink-0"
@@ -311,8 +377,32 @@ export default function Preview() {
                       <span className="font-sans text-[11px] text-dark tracking-wide">
                         {selectedProduct?.name[lang]} · {selectedVariant.name[lang]}
                       </span>
+                      <span className="font-sans text-[10px] text-accent uppercase tracking-wider ml-1">
+                        — {currentRoom.label[lang]}
+                      </span>
                     </motion.div>
                   )}
+
+                  <div className="absolute top-4 right-4 flex flex-col gap-1.5">
+                    {ROOMS.map((room) => {
+                      const Icon = room.Icon;
+                      const isActive = selectedRoomId === room.id;
+                      return (
+                        <button
+                          key={room.id}
+                          onClick={() => setSelectedRoomId(room.id)}
+                          title={room.label[lang]}
+                          className={`w-9 h-9 flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
+                            isActive
+                              ? 'bg-white text-dark shadow-md'
+                              : 'bg-dark/40 text-white hover:bg-dark/60'
+                          }`}
+                        >
+                          <Icon size={15} strokeWidth={1.5} />
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <p className="mt-3 font-sans text-[10px] text-muted/50 text-center tracking-[0.2em]">

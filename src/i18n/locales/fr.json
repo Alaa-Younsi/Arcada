@@ -44,6 +44,13 @@
     "download": "Enregistrer l'image",
     "requestQuote": "Demander un devis pour cette sélection",
     "selectedProducts": "Votre sélection",
+    "chooseRoom": "0 · Choisir une pièce",
+    "rooms": {
+      "bathroom": "Salle de bain",
+      "living-room": "Salon",
+      "bedroom": "Chambre",
+      "kitchen": "Cuisine"
+    },
     "zone": {
       "wall": "Mur principal",
       "floor": "Sol",
