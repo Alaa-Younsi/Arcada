@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -87,6 +87,7 @@ export default function Product() {
   const [selectedVariant, setSelectedVariant] = useState<ColorVariant | null>(
     product?.variants[0] ?? null
   );
+  const imageRef = useRef<HTMLDivElement>(null);
 
   const relatedProducts = product
     ? getProductsByCategory(categorySlug).filter((p) => p.slug !== productSlug).slice(0, 3)
@@ -130,6 +131,7 @@ export default function Product() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left: image */}
           <motion.div
+            ref={imageRef}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -200,7 +202,12 @@ export default function Product() {
                 {product.variants.map((v) => (
                   <button
                     key={v.id}
-                    onClick={() => setSelectedVariant(v)}
+                    onClick={() => {
+                      setSelectedVariant(v);
+                      if (window.innerWidth < 1024) {
+                        imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
                     title={v.name[lang]}
                     className={[
                       'w-8 h-8 rounded-full border-2 transition-all duration-200 hover:scale-110',

@@ -88,62 +88,92 @@ export default function Catalogue() {
         description={t('catalogue.subtitle')}
       />
 
-      {/* Header */}
-      <div className="pt-32 pb-16 px-6 lg:px-16 max-w-screen-2xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-accent mb-4">
-            {t('catalogue.allCollections')}
-          </p>
-          <h1
-            className="font-display font-light text-dark mb-4"
-            style={{ fontSize: 'clamp(36px, 5vw, 72px)' }}
-          >
-            {t('catalogue.title')}
-          </h1>
-          <p className="font-sans text-muted text-sm max-w-xl tracking-wide leading-relaxed">
-            {t('catalogue.subtitle')}
-          </p>
-        </motion.div>
-      </div>
+      <div className="max-w-screen-2xl mx-auto px-6 lg:px-16 pt-32 pb-28 flex gap-16">
 
-      <div className="max-w-screen-2xl mx-auto px-6 lg:px-16 pb-28">
-        <div className="flex gap-12">
-          {/* Sidebar filter */}
-          <aside className="w-56 flex-shrink-0 hidden lg:block">
-            <div className="sticky top-28">
-              <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-muted mb-6">
-                {t('catalogue.filterBy')}
-              </p>
+        {/* ── Desktop sidebar ───────────────────────────────────────── */}
+        <aside className="w-52 flex-shrink-0 hidden lg:block">
+          <div className="sticky top-24">
+            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-muted mb-6">
+              {t('catalogue.filterBy')}
+            </p>
+            <button
+              onClick={() => { setActiveSlug(null); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className={[
+                'block w-full text-left font-sans text-sm py-2.5 border-b border-[#E8E2D9]/60 transition-colors duration-200',
+                activeSlug === null ? 'text-accent' : 'text-muted hover:text-dark',
+              ].join(' ')}
+            >
+              {t('catalogue.allCollections')}
+            </button>
+            {CATEGORIES.map((cat) => (
               <button
-                onClick={() => { setActiveSlug(null); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                key={cat.slug}
+                onClick={() => scrollToCategory(cat.slug)}
                 className={[
                   'block w-full text-left font-sans text-sm py-2.5 border-b border-[#E8E2D9]/60 transition-colors duration-200',
-                  activeSlug === null ? 'text-accent' : 'text-muted hover:text-dark',
+                  activeSlug === cat.slug ? 'text-accent' : 'text-muted hover:text-dark',
                 ].join(' ')}
               >
-                {t('catalogue.allCollections')}
+                {cat.name[lang]}
               </button>
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.slug}
-                  onClick={() => scrollToCategory(cat.slug)}
-                  className={[
-                    'block w-full text-left font-sans text-sm py-2.5 border-b border-[#E8E2D9]/60 transition-colors duration-200',
-                    activeSlug === cat.slug ? 'text-accent' : 'text-muted hover:text-dark',
-                  ].join(' ')}
-                >
-                  {cat.name[lang]}
-                </button>
-              ))}
-            </div>
-          </aside>
+            ))}
+          </div>
+        </aside>
+
+        {/* ── Main content ────────────────────────────────────────── */}
+        <div className="flex-1 min-w-0">
+          {/* Page header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-16"
+          >
+            <p className="font-sans text-xs uppercase tracking-[0.3em] text-accent mb-4">
+              {t('catalogue.allCollections')}
+            </p>
+            <h1
+              className="font-display font-light text-dark mb-4"
+              style={{ fontSize: 'clamp(36px, 5vw, 72px)' }}
+            >
+              {t('catalogue.title')}
+            </h1>
+            <p className="font-sans text-muted text-sm max-w-xl tracking-wide leading-relaxed">
+              {t('catalogue.subtitle')}
+            </p>
+          </motion.div>
+
+          {/* Mobile filter bar */}
+          <div className="lg:hidden -mx-1 mb-12 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+            <button
+              onClick={() => { setActiveSlug(null); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className={[
+                'flex-shrink-0 font-sans text-xs px-4 py-2 rounded-full border transition-colors duration-200',
+                activeSlug === null
+                  ? 'border-accent bg-accent text-white'
+                  : 'border-[#E8E2D9] text-muted hover:border-accent hover:text-accent',
+              ].join(' ')}
+            >
+              {t('catalogue.allCollections')}
+            </button>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.slug}
+                onClick={() => scrollToCategory(cat.slug)}
+                className={[
+                  'flex-shrink-0 font-sans text-xs px-4 py-2 rounded-full border transition-colors duration-200',
+                  activeSlug === cat.slug
+                    ? 'border-accent bg-accent text-white'
+                    : 'border-[#E8E2D9] text-muted hover:border-accent hover:text-accent',
+                ].join(' ')}
+              >
+                {cat.name[lang]}
+              </button>
+            ))}
+          </div>
 
           {/* Product sections */}
-          <div className="flex-1 min-w-0 space-y-20">
+          <div className="space-y-20">
             {displayedCategories.map((cat) => {
               const products = getProductsByCategory(cat.slug);
               if (!products.length) return null;
@@ -177,6 +207,7 @@ export default function Catalogue() {
             })}
           </div>
         </div>
+
       </div>
     </>
   );

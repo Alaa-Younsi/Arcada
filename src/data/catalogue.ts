@@ -45,7 +45,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux en forme de piquet allongé avec des finitions émaillées artisanales.',
       ar: 'بلاط سيراميك بشكل لقطة مستطيلة بتشطيبات مزججة حرفية.',
     },
-    image: '/image1.jpg',
+    image: '/categories/Silos.png',
     shape: 'Picket · 10×30 cm',
   },
   {
@@ -56,7 +56,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille artisanaux avec textures en relief et finitions métalliques.',
       ar: 'بلاط على شكل ورقة بنقوش بارزة وتشطيبات معدنية.',
     },
-    image: '/image2.jpg',
+    image: '/categories/Atelier.png',
     shape: 'Leaf · 10×30 cm',
   },
   {
@@ -67,7 +67,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux rectangulaires de style métro avec un aspect vieilli fait main.',
       ar: 'بلاط مستطيل بأسلوب المترو بمظهر عتيق مصنوع يدويًا.',
     },
-    image: '/image3.jpg',
+    image: '/categories/Ducal.png',
     shape: 'Subway · 10×30 cm',
   },
   {
@@ -78,7 +78,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux feuille architecturaux inspirés des frondes de palmier.',
       ar: 'بلاط بشكل ورقة معمارية مستوحى من سعف النخيل.',
     },
-    image: '/image4.jpg',
+    image: '/categories/Leaf.png',
     shape: 'Leaf · 15×30 cm',
   },
   {
@@ -89,7 +89,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux hexagonaux allongés ludiques avec motifs décoratifs.',
       ar: 'بلاط سداسي مستطيل مرح بزخارف مميزة.',
     },
-    image: '/image5.jpg',
+    image: '/categories/Gonos.png',
     shape: 'Hexagon · 15×30 cm',
   },
   {
@@ -100,7 +100,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux marocains en écaille avec relief ornemental en saillie.',
       ar: 'بلاط مستوحى من الطابع المغربي بشكل صدفة مع نقوش بارزة.',
     },
-    image: '/image6.png',
+    image: '/categories/Chic.png',
     shape: 'Scallop · 20×20 cm',
   },
   {
@@ -111,7 +111,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux peints à la main avec riches motifs floraux.',
       ar: 'بلاط تقليدي مطلي يدويًا بزخارف زهرية غنية.',
     },
-    image: '/image1.jpg',
+    image: '/categories/KRONFEL.png',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -122,7 +122,7 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: 'Carreaux de style andalou peints à la main avec motifs botaniques.',
       ar: 'بلاط بالأسلوب الأندلسي مرسوم يدويًا بزخارف نباتية.',
     },
-    image: '/image2.jpg',
+    image: '/categories/Casbah.png',
     shape: 'Square · 20×20 cm',
   },
   {
@@ -133,7 +133,40 @@ export const CATEGORIES: CatalogueCategory[] = [
       fr: "Carreaux d'inspiration ottomane avec arabesques complexes.",
       ar: 'بلاط مستوحى من العثمانية بزخارف تدوير معقدة.',
     },
-    image: '/image3.jpg',
+    image: '/categories/Yasmine.png',
+    shape: 'Square · 20×20 cm',
+  },
+  {
+    slug: 'nardjes',
+    name: { en: 'Nardjes', fr: 'Nardjes', ar: 'نارجس' },
+    description: {
+      en: 'Elegant hand-painted tiles with delicate floral arabesque patterns.',
+      fr: 'Carreaux peints à la main avec délicats motifs floraux arabesques.',
+      ar: 'بلاط مطلي يدويًا بزخارف عربية زهرية رقيقة.',
+    },
+    image: '/categories/Narjes.jpg',
+    shape: 'Square · 20×20 cm',
+  },
+  {
+    slug: 'andalous',
+    name: { en: 'Andalous', fr: 'Andalous', ar: 'أندلوس' },
+    description: {
+      en: 'Moorish-inspired tiles with geometric interlace patterns in vivid colors.',
+      fr: "Carreaux d'inspiration mauresque avec entrelacs géométriques aux couleurs vives.",
+      ar: 'بلاط مستوحى من الأندلس بأنماط هندسية متشابكة بألوان زاهية.',
+    },
+    image: '/categories/Andalous.png',
+    shape: 'Square · 20×20 cm',
+  },
+  {
+    slug: 'azahra',
+    name: { en: 'Azahra', fr: 'Azahra', ar: 'الزهراء' },
+    description: {
+      en: 'Heritage-inspired hand-painted tiles with ornate medallion motifs.',
+      fr: "Carreaux peints à la main d'inspiration patrimoniale avec médaillons ornementaux.",
+      ar: 'بلاط مطلي يدويًا بوحي من التراث بزخارف ميداليات مزخرفة.',
+    },
+    image: '/categories/Azahra.png',
     shape: 'Square · 20×20 cm',
   },
 ];
@@ -426,6 +459,60 @@ export const PRODUCTS: CatalogueProduct[] = [
     finish: 'Hand-painted',
     variants: [
       { id: 'yasmine-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-YAS-001.jpg' },
+    ],
+  },
+
+  // ─── NARDJES ─────────────────────────────────────────
+  {
+    id: 'nardjes',
+    categorySlug: 'nardjes',
+    slug: 'nardjes',
+    name: { en: 'Nardjes', fr: 'Nardjes', ar: 'نارجس' },
+    description: {
+      en: 'Elegant hand-painted tile with delicate floral arabesque patterns.',
+      fr: 'Carreau peint à la main avec délicats motifs floraux arabesques.',
+      ar: 'بلاط مطلي يدويًا بزخارف عربية زهرية رقيقة.',
+    },
+    size: '20×20 cm',
+    finish: 'Hand-painted',
+    variants: [
+      { id: 'nardjes-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#8B6F47', image: '/products/ARC-NAR-001.jpg' },
+    ],
+  },
+
+  // ─── ANDALOUS ────────────────────────────────────────
+  {
+    id: 'andalous',
+    categorySlug: 'andalous',
+    slug: 'andalous',
+    name: { en: 'Andalous', fr: 'Andalous', ar: 'أندلوس' },
+    description: {
+      en: 'Moorish-inspired tile with geometric interlace patterns in vivid colors.',
+      fr: "Carreau d'inspiration mauresque avec entrelacs géométriques aux couleurs vives.",
+      ar: 'بلاط مستوحى من الأندلس بأنماط هندسية متشابكة بألوان زاهية.',
+    },
+    size: '20×20 cm',
+    finish: 'Hand-painted',
+    variants: [
+      { id: 'andalous-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#1A5276', image: '/products/ARC-AND-001.jpg' },
+    ],
+  },
+
+  // ─── AZAHRA ──────────────────────────────────────────
+  {
+    id: 'azahra',
+    categorySlug: 'azahra',
+    slug: 'azahra',
+    name: { en: 'Azahra', fr: 'Azahra', ar: 'الزهراء' },
+    description: {
+      en: 'Heritage-inspired hand-painted tile with ornate medallion motifs.',
+      fr: "Carreau peint à la main d'inspiration patrimoniale avec médaillons ornementaux.",
+      ar: 'بلاط مطلي يدويًا بوحي من التراث بزخارف ميداليات مزخرفة.',
+    },
+    size: '20×20 cm',
+    finish: 'Hand-painted',
+    variants: [
+      { id: 'azahra-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-AZH-001.jpg' },
     ],
   },
 ];

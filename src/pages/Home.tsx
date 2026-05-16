@@ -280,83 +280,81 @@ export default function Home() {
       </section>
 
       {/* ─── COLLECTIONS GRID ───────────────────────────────────────── */}
-      <section className="py-20 md:py-28 px-6 lg:px-16 max-w-screen-2xl mx-auto">
-        <div className="flex items-end justify-between mb-12">
-          <div>
-            <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3">
-              {t('nav.collections')}
-            </p>
-            <h2
-              className="font-display font-light text-dark"
-              style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
+      <section className="py-20 md:py-28">
+        <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto mb-12">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="font-sans text-[10px] uppercase tracking-[0.35em] text-accent mb-3">
+                {t('nav.collections')}
+              </p>
+              <h2
+                className="font-display font-light text-dark"
+                style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
+              >
+                {lang === 'fr' ? '12 Collections' : lang === 'ar' ? '12 مجموعات' : '12 Collections'}
+              </h2>
+            </div>
+            <Link
+              to="/catalogue"
+              className="hidden sm:inline-flex items-center gap-3 font-sans text-[10px] uppercase tracking-[0.25em] text-muted hover:text-accent transition-colors group"
             >
-              {lang === 'fr' ? '9 Collections' : lang === 'ar' ? '9 مجموعات' : '9 Collections'}
-            </h2>
+              {t('common.viewAll')}
+              <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
+            </Link>
           </div>
-          <Link
-            to="/catalogue"
-            className="hidden sm:inline-flex items-center gap-3 font-sans text-[10px] uppercase tracking-[0.25em] text-muted hover:text-accent transition-colors group"
-          >
-            {t('common.viewAll')}
-            <span className="w-6 h-px bg-current group-hover:w-10 transition-all duration-300" />
-          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CATEGORIES.map((cat, i) => (
-            <motion.div
-              key={cat.slug}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              custom={i * 0.5}
-              className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-surface-warm"
-            >
-              <img
-                src={cat.image}
-                alt={cat.name[lang]}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/20 to-transparent" />
+        <div className="px-6 lg:px-16 overflow-x-auto">
+          <div className="flex gap-6 pb-4" style={{ minWidth: 'max-content' }}>
+            {CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                to={`/catalogue/${cat.slug}`}
+                className="group relative overflow-hidden rounded-2xl w-80 flex-shrink-0 bg-surface-warm block"
+                style={{ aspectRatio: '3/4' }}
+              >
+                <img
+                  src={cat.image}
+                  alt={cat.name[lang]}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/20 to-transparent" />
 
-              {/* Default state */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-300 group-hover:opacity-0">
-                <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
-                  {cat.shape}
-                </p>
-                <h3 className="font-display font-light text-white text-2xl leading-tight">
-                  {cat.name[lang]}
-                </h3>
-              </div>
+                {/* Default state */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 transition-opacity duration-300 group-hover:opacity-0">
+                  <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
+                    {cat.shape}
+                  </p>
+                  <h3 className="font-display font-light text-white text-2xl leading-tight">
+                    {cat.name[lang]}
+                  </h3>
+                </div>
 
-              {/* Hover state */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-dark/60">
-                <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
-                  {cat.shape}
-                </p>
-                <h3 className="font-display font-light text-white text-2xl leading-tight mb-3">
-                  {cat.name[lang]}
-                </h3>
-                <p className="font-sans text-white/70 text-xs leading-relaxed mb-4">
-                  {cat.description[lang]}
-                </p>
-                <Link
-                  to={`/catalogue/${cat.slug}`}
-                  className="inline-flex items-center gap-2 font-sans text-white text-[10px] uppercase tracking-[0.25em] group/link"
-                >
-                  Voir →
-                </Link>
-              </div>
-            </motion.div>
-          ))}
+                {/* Hover state */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-dark/60">
+                  <p className="font-sans text-white/60 text-[10px] uppercase tracking-[0.3em] mb-2">
+                    {cat.shape}
+                  </p>
+                  <h3 className="font-display font-light text-white text-2xl leading-tight mb-3">
+                    {cat.name[lang]}
+                  </h3>
+                  <p className="font-sans text-white/70 text-xs leading-relaxed mb-4">
+                    {cat.description[lang]}
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-sans text-white text-[10px] uppercase tracking-[0.25em]">
+                    Voir →
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ─── FEATURED PRODUCTS ──────────────────────────────────────── */}
-      <section className="py-20 md:py-28 bg-surface-warm">
+      <section className="py-20 md:py-28 bg-dark">
         <div className="px-6 lg:px-16 max-w-screen-2xl mx-auto">
           <div className="flex items-end justify-between mb-12">
             <div>
@@ -364,7 +362,7 @@ export default function Home() {
                 {lang === 'fr' ? 'Sélection' : lang === 'ar' ? 'اختيار' : 'Selection'}
               </p>
               <h2
-                className="font-display font-light text-dark"
+                className="font-display font-light text-white"
                 style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
               >
                 {lang === 'fr' ? 'Produits phares' : lang === 'ar' ? 'المنتجات المميزة' : 'Featured Products'}
@@ -404,7 +402,7 @@ export default function Home() {
                       <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">
                         {cat?.name[lang]}
                       </p>
-                      <h3 className="font-display font-light text-dark text-xl mb-3">
+                      <h3 className="font-display font-light text-white text-xl mb-3">
                         {product.name[lang]}
                       </h3>
                     </div>
@@ -415,18 +413,82 @@ export default function Home() {
                         key={v.id}
                         to={`/catalogue/${product.categorySlug}/${product.slug}`}
                         title={v.name[lang]}
-                        className="w-5 h-5 rounded-full border border-[#E8E2D9] hover:scale-125 transition-transform duration-200 flex-shrink-0"
+                        className="w-5 h-5 rounded-full border border-white/20 hover:scale-125 transition-transform duration-200 flex-shrink-0"
                         style={{ backgroundColor: v.hex }}
                       />
                     ))}
                     {extra > 0 && (
-                      <span className="font-sans text-[10px] text-muted">+{extra}</span>
+                      <span className="font-sans text-[10px] text-white/40">+{extra}</span>
                     )}
                   </div>
                 </motion.div>
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ─── ABOUT ARCADA ────────────────────────────────────────── */}
+      <section className="py-20 md:py-32 px-6 lg:px-16 bg-[#FAF8F5]">
+        <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-warm"
+          >
+            <img
+              src="/about.png"
+              alt="ARCADA showroom"
+              className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </motion.div>
+
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <p className="font-sans text-[10px] uppercase tracking-[0.4em] text-accent mb-5">
+              {lang === 'fr' ? 'À propos' : lang === 'ar' ? 'من نحن' : 'About'}
+            </p>
+            <h2
+              className="font-display font-light text-dark mb-8 leading-tight"
+              style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
+            >
+              {lang === 'fr' ? "Présentation d'Arcada" : lang === 'ar' ? 'تعريف بأركادا' : 'About Arcada'}
+            </h2>
+            <div className="space-y-5 font-sans text-sm text-muted leading-relaxed tracking-wide">
+              {lang === 'fr' ? (
+                <>
+                  <p>Employé depuis l&apos;Antiquité à des fins décoratives, le carreau céramique a toujours été l&apos;élément artistique essentiel pour décorer les résidences de la classe aisée et les bâtiments les plus somptueux. Aujourd&apos;hui, l&apos;industrie a fait du carrelage un produit lisse et monotone limité à quatre imitations : marbre, bois, pierre et ciment.</p>
+                  <p>Arcada est venue rendre au carreau céramique sa place artistique dans le monde de la décoration, donnant ainsi à ses clients la possibilité de créer des espaces uniques répondant aux besoins des plus exigeants ! Cet objectif est atteint grâce à l&apos;incorporation de formes géométriques qui s&apos;affichent en relief, avec de multiples applications, coloris, effets décoratifs spéciaux et nuances, l&apos;application de matière première de haute qualité et l&apos;utilisation d&apos;équipements de dernière technologie.</p>
+                  <p>Nos collections s&apos;intègrent parfaitement dans les éléments d&apos;architecture ou éléments de décoration d&apos;intérieur, sont durables, inaltérables et ne nécessitent aucun entretien.</p>
+                  <p>Nous vous invitons à visiter notre showroom à Sebala (Draria) pour voir de près nos collections. Nous vous assurons un service excellent et une qualité irréprochable.</p>
+                </>
+              ) : lang === 'ar' ? (
+                <>
+                  <p>استُخدم البلاط السيراميكي منذ العصور القديمة لأغراض زخرفية، وكان دائمًا العنصر الفني الأساسي لزينة منازل الطبقة الراقية وأفخر المباني. أما اليوم، فقد حوّلت الصناعة البلاط إلى منتج ناعم ورتيب لا يتجاوز أربعة تقليدات: الرخام والخشب والحجر والإسمنت.</p>
+                  <p>جاءت أركادا لتُعيد للبلاط السيراميكي مكانته الفنية في عالم الديكور، مانحةً عملاءها إمكانية إنشاء فضاءات فريدة تلبّي أعلى المتطلبات. يتحقق هذا الهدف من خلال دمج الأشكال الهندسية التي تبرز في نقوش بارزة، مع تعدد التطبيقات والألوان والتأثيرات الزخرفية والدرجات اللونية، واستخدام مواد أولية عالية الجودة ومعدات بأحدث التقنيات.</p>
+                  <p>تتناسق مجموعاتنا بشكل مثالي مع عناصر العمارة وعناصر الديكور الداخلي، وهي متينة وغير قابلة للتغيير ولا تحتاج إلى أي صيانة.</p>
+                  <p>ندعوكم لزيارة صالة العرض في سبالة (دراريا) للاطلاع عن قرب على مجموعاتنا. نضمن لكم خدمة ممتازة وجودة لا تشوبها شائبة.</p>
+                </>
+              ) : (
+                <>
+                  <p>Used since Antiquity for decorative purposes, ceramic tile has always been the essential artistic element for adorning the residences of the upper class and the most sumptuous buildings. Today, the industry has reduced tiling to a smooth and monotonous product limited to four imitations: marble, wood, stone and cement.</p>
+                  <p>Arcada has come to restore ceramic tile to its rightful artistic place in the world of decoration, giving its clients the possibility of creating unique spaces that meet the most demanding requirements. This is achieved through the incorporation of geometric shapes displayed in relief, with multiple applications, colors, special decorative effects and shades, the use of high-quality raw materials and state-of-the-art equipment.</p>
+                  <p>Our collections integrate perfectly into architectural elements and interior decoration, are durable, unalterable and require no maintenance.</p>
+                  <p>We invite you to visit our showroom in Sebala (Draria) to discover our collections up close. We guarantee excellent service and irreproachable quality.</p>
+                </>
+              )}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -453,7 +515,7 @@ export default function Home() {
             </p>
             <Link
               to="/preview"
-              className="inline-block px-8 py-4 border border-white/30 text-white font-sans text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-dark transition-all duration-300"
+              className="inline-block px-8 py-4 rounded-2xl border border-white/30 text-white font-sans text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-dark transition-all duration-300"
             >
               {lang === 'fr' ? 'Lancer le Visualiseur' : lang === 'ar' ? 'فتح العارض' : 'Open the Visualizer'}
             </Link>
@@ -464,7 +526,7 @@ export default function Home() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="relative aspect-square overflow-hidden hidden lg:block"
+            className="relative aspect-square overflow-hidden rounded-2xl hidden lg:block"
           >
             <img src="/image6.png" alt="Carreaux céramiques ARCADA dans un espace intérieur" className="w-full h-full object-cover opacity-60" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-br from-dark/60 to-transparent" />
