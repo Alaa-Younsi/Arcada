@@ -4,10 +4,9 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Pause, Play } from 'lucide-react';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { CATEGORIES, getFeaturedProducts } from '@/data/catalogue';
+import { CATEGORIES, getFeaturedFlatVariants } from '@/data/catalogue';
 import type { Lang } from '@/types';
 
-const MAX_SWATCHES = 6;
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -17,7 +16,7 @@ const fadeUp = {
 export default function Home() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as Lang;
-  const featured = getFeaturedProducts();
+  const featured = getFeaturedFlatVariants();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(true);
 
@@ -131,69 +130,6 @@ export default function Home() {
             ✦ {t('hero.visualizerTeaser')}
           </motion.p>
         </div>
-      </section>
-
-      {/* ─── MANIFESTO QUOTE ────────────────────────────────────────── */}
-      <section className="relative py-24 md:py-36 overflow-hidden bg-[#FAF8F5]">
-        {/* Decorative large background letter */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none select-none absolute inset-0 flex items-center justify-center font-display font-light text-[#E8E2D9] leading-none"
-          style={{ fontSize: 'clamp(160px, 28vw, 380px)' }}
-        >
-          A
-        </span>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="relative max-w-screen-xl mx-auto px-6 lg:px-16 text-center"
-        >
-          {/* Opening mark */}
-          <p
-            aria-hidden="true"
-            className="font-display text-accent/40 leading-none mb-2 select-none"
-            style={{ fontSize: 'clamp(60px, 8vw, 120px)' }}
-          >
-            "
-          </p>
-
-          <blockquote
-            className="font-display font-light text-dark leading-[1.15]"
-            style={{ fontSize: 'clamp(28px, 4.5vw, 68px)' }}
-          >
-            {lang === 'fr' ? (
-              <>
-                Qualité,{' '}
-                <em className="not-italic text-accent">durabilité</em>,{' '}
-                design<br className="hidden md:block" /> et innovation
-              </>
-            ) : lang === 'ar' ? (
-              <>
-                جودة،{' '}
-                <em className="not-italic text-accent">استدامة</em>،{' '}
-                تصميم وابتكار
-              </>
-            ) : (
-              <>
-                Quality,{' '}
-                <em className="not-italic text-accent">sustainability</em>,{' '}
-                design<br className="hidden md:block" /> and innovation
-              </>
-            )}
-          </blockquote>
-
-          {/* Closing mark + divider */}
-          <div className="mt-10 flex items-center justify-center gap-6">
-            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
-            <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-muted">
-              ARCADA
-            </p>
-            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
-          </div>
-        </motion.div>
       </section>
 
       {/* ─── EXCLUSIVE MANUFACTURER ─────────────────────────────────── */}
@@ -373,26 +309,24 @@ export default function Home() {
 
         <div className="px-6 lg:px-16 overflow-x-auto">
           <div className="flex gap-6 pb-4" style={{ minWidth: 'max-content' }}>
-            {featured.slice(0, 6).map((product) => {
-              const cat = CATEGORIES.find((c) => c.slug === product.categorySlug);
-              const firstImage = product.variants[0]?.image ?? '/placeholder.jpg';
-              const shown = product.variants.slice(0, MAX_SWATCHES);
-              const extra = product.variants.length > MAX_SWATCHES ? product.variants.length - MAX_SWATCHES : 0;
+            {featured.slice(0, 8).map((fv) => {
+              const cat = CATEGORIES.find((c) => c.slug === fv.categorySlug);
+              const href = `/catalogue/${fv.categorySlug}/${fv.productSlug}?variant=${fv.variantId}`;
 
               return (
                 <motion.div
-                  key={product.id}
+                  key={fv.variantId}
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                   className="w-72 flex-shrink-0 group"
                 >
-                  <Link to={`/catalogue/${product.categorySlug}/${product.slug}`} className="block">
+                  <Link to={href} className="block">
                     <div className="aspect-[3/4] bg-surface overflow-hidden relative rounded-2xl">
                       <img
-                        src={firstImage}
-                        alt={product.name[lang]}
+                        src={fv.image}
+                        alt={`${fv.productName[lang]} — ${fv.name[lang]}`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                         loading="lazy"
                         decoding="async"
@@ -402,25 +336,14 @@ export default function Home() {
                       <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">
                         {cat?.name[lang]}
                       </p>
-                      <h3 className="font-display font-light text-white text-xl mb-3">
-                        {product.name[lang]}
+                      <h3 className="font-display font-light text-white text-xl mb-1">
+                        {fv.productName[lang]}
                       </h3>
+                      <p className="font-sans text-white/50 text-xs tracking-wide">
+                        {fv.name[lang]}
+                      </p>
                     </div>
                   </Link>
-                  <div className="flex items-center gap-1.5">
-                    {shown.map((v) => (
-                      <Link
-                        key={v.id}
-                        to={`/catalogue/${product.categorySlug}/${product.slug}`}
-                        title={v.name[lang]}
-                        className="w-5 h-5 rounded-full border border-white/20 hover:scale-125 transition-transform duration-200 flex-shrink-0"
-                        style={{ backgroundColor: v.hex }}
-                      />
-                    ))}
-                    {extra > 0 && (
-                      <span className="font-sans text-[10px] text-white/40">+{extra}</span>
-                    )}
-                  </div>
                 </motion.div>
               );
             })}
@@ -532,6 +455,69 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-dark/60 to-transparent" />
           </motion.div>
         </div>
+      </section>
+
+      {/* ─── MANIFESTO QUOTE ────────────────────────────────────────── */}
+      <section className="relative py-24 md:py-36 overflow-hidden bg-[#FAF8F5]">
+        {/* Decorative large background letter */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none select-none absolute inset-0 flex items-center justify-center font-display font-light text-[#E8E2D9] leading-none"
+          style={{ fontSize: 'clamp(160px, 28vw, 380px)' }}
+        >
+          A
+        </span>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+          className="relative max-w-screen-xl mx-auto px-6 lg:px-16 text-center"
+        >
+          {/* Opening mark */}
+          <p
+            aria-hidden="true"
+            className="font-display text-accent/40 leading-none mb-2 select-none"
+            style={{ fontSize: 'clamp(60px, 8vw, 120px)' }}
+          >
+            "
+          </p>
+
+          <blockquote
+            className="font-display font-light text-dark leading-[1.15]"
+            style={{ fontSize: 'clamp(28px, 4.5vw, 68px)' }}
+          >
+            {lang === 'fr' ? (
+              <>
+                Qualité,{' '}
+                <em className="not-italic text-accent">durabilité</em>,{' '}
+                design<br className="hidden md:block" /> et innovation
+              </>
+            ) : lang === 'ar' ? (
+              <>
+                جودة،{' '}
+                <em className="not-italic text-accent">استدامة</em>،{' '}
+                تصميم وابتكار
+              </>
+            ) : (
+              <>
+                Quality,{' '}
+                <em className="not-italic text-accent">sustainability</em>,{' '}
+                design<br className="hidden md:block" /> and innovation
+              </>
+            )}
+          </blockquote>
+
+          {/* Closing mark + divider */}
+          <div className="mt-10 flex items-center justify-center gap-6">
+            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
+            <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-muted">
+              ARCADA
+            </p>
+            <span className="flex-1 max-w-[120px] h-px bg-[#E8E2D9]" />
+          </div>
+        </motion.div>
       </section>
     </>
   );

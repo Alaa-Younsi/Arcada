@@ -2,16 +2,16 @@ import { motion } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { CATEGORIES, PRODUCTS, getProductsByCategory } from '@/data/catalogue';
-import type { Lang, CatalogueProduct } from '@/types';
+import { CATEGORIES, getFlatVariantsByCategory, type FlatVariant } from '@/data/catalogue';
+import type { Lang } from '@/types';
 
 const MAX_SWATCHES = 8;
 
-function ProductCard({ product, lang }: { product: CatalogueProduct; lang: Lang }) {
+function ProductCard({ variant, lang }: { variant: FlatVariant; lang: Lang }) {
   const { t } = useTranslation();
-  const firstImage = product.variants[0]?.image ?? '/placeholder.jpg';
-  const extra = product.variants.length > MAX_SWATCHES ? product.variants.length - MAX_SWATCHES : 0;
-  const shown = product.variants.slice(0, MAX_SWATCHES);
+  const cat = CATEGORIES.find((c) => c.slug === variant.categorySlug);
+  const catName = cat ? cat.name[lang] : variant.categorySlug;
+  const href = `/catalogue/${variant.categorySlug}/${variant.productSlug}?variant=${variant.variantId}`;
 
   return (
     <motion.div
@@ -21,11 +21,11 @@ function ProductCard({ product, lang }: { product: CatalogueProduct; lang: Lang 
       transition={{ duration: 0.5 }}
       className="group"
     >
-      <Link to={`/catalogue/${product.categorySlug}/${product.slug}`} className="block">
+      <Link to={href} className="block">
         <div className="overflow-hidden bg-surface-warm aspect-[4/5] relative rounded-2xl">
           <img
-            src={firstImage}
-            alt={product.name[lang]}
+            src={variant.image}
+            alt={`${variant.productName[lang]} — ${variant.name[lang]}`}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             loading="lazy"
             decoding="async"
@@ -37,26 +37,13 @@ function ProductCard({ product, lang }: { product: CatalogueProduct; lang: Lang 
           </div>
         </div>
         <div className="pt-4">
-          <h3 className="font-display text-dark font-light text-xl leading-tight mb-2">{product.name[lang]}</h3>
-          <p className="font-sans text-muted text-xs tracking-wide mb-3">
-            {product.size} · {product.finish}
+          <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">{catName}</p>
+          <h3 className="font-display text-dark font-light text-xl leading-tight mb-1">{variant.productName[lang]}</h3>
+          <p className="font-sans text-muted text-xs tracking-wide">
+            {variant.name[lang]} · {variant.size}
           </p>
         </div>
       </Link>
-      <div className="flex items-center gap-1.5 flex-wrap">
-        {shown.map((v) => (
-          <Link
-            key={v.id}
-            to={`/catalogue/${product.categorySlug}/${product.slug}`}
-            title={v.name[lang]}
-            className="w-5 h-5 rounded-full border border-[#E8E2D9] hover:scale-125 transition-transform duration-200 flex-shrink-0"
-            style={{ backgroundColor: v.hex }}
-          />
-        ))}
-        {extra > 0 && (
-          <span className="font-sans text-[10px] text-muted">+{extra}</span>
-        )}
-      </div>
     </motion.div>
   );
 }
@@ -67,7 +54,7 @@ export default function Category() {
   const lang = i18n.language as Lang;
 
   const category = CATEGORIES.find((c) => c.slug === categorySlug);
-  const products = getProductsByCategory(categorySlug);
+  const flatVariants = getFlatVariantsByCategory(categorySlug);
 
   if (!category) {
     return (
@@ -136,14 +123,14 @@ export default function Category() {
 
       {/* Products grid */}
       <section className="max-w-screen-2xl mx-auto px-6 lg:px-16 pb-28">
-        {products.length === 0 ? (
+        {flatVariants.length === 0 ? (
           <p className="font-sans text-muted text-sm py-20 text-center">
             Aucun produit dans cette collection.
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} lang={lang} />
+            {flatVariants.map((fv) => (
+              <ProductCard key={fv.variantId} variant={fv} lang={lang} />
             ))}
           </div>
         )}

@@ -531,3 +531,43 @@ export function getProductBySlug(slug: string): CatalogueProduct | undefined {
 export function getFeaturedProducts(): CatalogueProduct[] {
   return PRODUCTS.filter((p) => p.isFeatured);
 }
+
+// ─── Flat variant helpers ─────────────────────────────────────────────────────
+// Each variant becomes an independent display unit (own image, own card)
+export interface FlatVariant {
+  variantId: string;
+  productSlug: string;
+  categorySlug: string;
+  name: Record<Lang, string>;
+  productName: Record<Lang, string>;
+  image: string;
+  hex: string;
+  size: string;
+  finish: string;
+  isFeatured: boolean;
+}
+
+export function getAllFlatVariants(): FlatVariant[] {
+  return PRODUCTS.flatMap((p) =>
+    p.variants.map((v) => ({
+      variantId: v.id,
+      productSlug: p.slug,
+      categorySlug: p.categorySlug,
+      name: v.name,
+      productName: p.name,
+      image: v.image,
+      hex: v.hex,
+      size: p.size,
+      finish: p.finish,
+      isFeatured: p.isFeatured ?? false,
+    }))
+  );
+}
+
+export function getFlatVariantsByCategory(categorySlug: string): FlatVariant[] {
+  return getAllFlatVariants().filter((fv) => fv.categorySlug === categorySlug);
+}
+
+export function getFeaturedFlatVariants(): FlatVariant[] {
+  return getAllFlatVariants().filter((fv) => fv.isFeatured);
+}

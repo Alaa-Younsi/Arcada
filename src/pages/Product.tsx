@@ -1,27 +1,22 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft } from 'lucide-react';
 import { SEOHead } from '@/components/seo/SEOHead';
 import {
   CATEGORIES,
-  PRODUCTS,
-  getProductsByCategory,
   getProductBySlug,
+  getFlatVariantsByCategory,
+  type FlatVariant,
 } from '@/data/catalogue';
-import type { Lang, CatalogueProduct, ColorVariant } from '@/types';
-import { useParams } from 'react-router-dom';
+import type { Lang, ColorVariant } from '@/types';
 
-const MAX_SWATCHES = 8;
-
-function SmallProductCard({ product, lang }: { product: CatalogueProduct; lang: Lang }) {
+function SmallProductCard({ variant, lang }: { variant: FlatVariant; lang: Lang }) {
   const { t } = useTranslation();
-  const cat = CATEGORIES.find((c) => c.slug === product.categorySlug);
-  const catName = cat ? cat.name[lang] : product.categorySlug;
-  const firstImage = product.variants[0]?.image ?? '/placeholder.jpg';
-  const extra = product.variants.length > MAX_SWATCHES ? product.variants.length - MAX_SWATCHES : 0;
-  const shown = product.variants.slice(0, MAX_SWATCHES);
+  const cat = CATEGORIES.find((c) => c.slug === variant.categorySlug);
+  const catName = cat ? cat.name[lang] : variant.categorySlug;
+  const href = `/catalogue/${variant.categorySlug}/${variant.productSlug}?variant=${variant.variantId}`;
 
   return (
     <motion.div
@@ -31,11 +26,11 @@ function SmallProductCard({ product, lang }: { product: CatalogueProduct; lang: 
       transition={{ duration: 0.5 }}
       className="group"
     >
-      <Link to={`/catalogue/${product.categorySlug}/${product.slug}`} className="block">
+      <Link to={href} className="block">
         <div className="overflow-hidden bg-surface-warm aspect-[4/5] relative rounded-2xl">
           <img
-            src={firstImage}
-            alt={product.name[lang]}
+            src={variant.image}
+            alt={`${variant.productName[lang]} — ${variant.name[lang]}`}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             loading="lazy"
             decoding="async"
@@ -48,26 +43,12 @@ function SmallProductCard({ product, lang }: { product: CatalogueProduct; lang: 
         </div>
         <div className="pt-4">
           <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-accent mb-1">{catName}</p>
-          <h3 className="font-display text-dark font-light text-xl leading-tight mb-2">{product.name[lang]}</h3>
-          <p className="font-sans text-muted text-xs tracking-wide mb-3">
-            {product.size} · {product.finish}
+          <h3 className="font-display text-dark font-light text-xl leading-tight mb-1">{variant.productName[lang]}</h3>
+          <p className="font-sans text-muted text-xs tracking-wide">
+            {variant.name[lang]} · {variant.size}
           </p>
         </div>
       </Link>
-      <div className="flex items-center gap-1.5 flex-wrap">
-        {shown.map((v) => (
-          <Link
-            key={v.id}
-            to={`/catalogue/${product.categorySlug}/${product.slug}`}
-            title={v.name[lang]}
-            className="w-5 h-5 rounded-full border border-[#E8E2D9] hover:scale-125 transition-transform duration-200 flex-shrink-0"
-            style={{ backgroundColor: v.hex }}
-          />
-        ))}
-        {extra > 0 && (
-          <span className="font-sans text-[10px] text-muted">+{extra}</span>
-        )}
-      </div>
     </motion.div>
   );
 }
@@ -77,20 +58,29 @@ export default function Product() {
     categorySlug: string;
     productSlug: string;
   }>();
+  const [searchParams] = useSearchParams();
   const { t, i18n } = useTranslation();
   const lang = i18n.language as Lang;
 
   const product = getProductBySlug(productSlug);
   const category = CATEGORIES.find((c) => c.slug === categorySlug);
 
+  // Pre-select variant from ?variant= URL param if present
+  const variantIdFromUrl = searchParams.get('variant');
+  const initialVariant = variantIdFromUrl
+    ? (product?.variants.find((v) => v.id === variantIdFromUrl) ?? product?.variants[0])
+    : product?.variants[0];
+
   // ✅ Always call hooks before any conditional return
   const [selectedVariant, setSelectedVariant] = useState<ColorVariant | null>(
-    product?.variants[0] ?? null
+    initialVariant ?? null
   );
   const imageRef = useRef<HTMLDivElement>(null);
 
-  const relatedProducts = product
-    ? getProductsByCategory(categorySlug).filter((p) => p.slug !== productSlug).slice(0, 3)
+  const relatedFlatVariants = product
+    ? getFlatVariantsByCategory(categorySlug)
+        .filter((fv) => fv.productSlug !== productSlug)
+        .slice(0, 3)
     : [];
 
   if (!product || !category || !selectedVariant) {
@@ -244,14 +234,14 @@ export default function Product() {
       </section>
 
       {/* Related products */}
-      {relatedProducts.length > 0 && (
+      {relatedFlatVariants.length > 0 && (
         <section className="max-w-screen-2xl mx-auto px-6 lg:px-16 py-20 border-t border-[#E8E2D9]">
           <h2 className="font-display font-light text-dark text-3xl mb-10">
             {t('catalogue.relatedProducts')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedProducts.map((p) => (
-              <SmallProductCard key={p.id} product={p} lang={lang} />
+            {relatedFlatVariants.map((fv) => (
+              <SmallProductCard key={fv.variantId} variant={fv} lang={lang} />
             ))}
           </div>
         </section>
