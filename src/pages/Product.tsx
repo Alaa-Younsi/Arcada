@@ -163,6 +163,34 @@ export default function Product() {
               ✦&nbsp;{lang === 'fr' ? 'Fabriqué exclusivement par ARCADA' : lang === 'ar' ? 'مصنوع حصريًا بواسطة ARCADA' : 'Made exclusively by ARCADA'}
             </p>
 
+            {/* Variant selector — mobile only */}
+            <div className="mb-6 block lg:hidden">
+              <p className="font-sans text-[10px] uppercase tracking-[0.25em] text-muted mb-4">
+                {t('catalogue.variants')} — <span className="text-dark normal-case">{selectedVariant.name[lang]}</span>
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {product.variants.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => {
+                      setSelectedVariant(v);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    title={v.name[lang]}
+                    className={[
+                      'w-8 h-8 rounded-full border-2 transition-all duration-200 hover:scale-110',
+                      selectedVariant.id === v.id
+                        ? 'border-dark scale-110'
+                        : 'border-[#E8E2D9]',
+                    ].join(' ')}
+                    style={{ backgroundColor: v.hex }}
+                    aria-label={v.name[lang]}
+                    aria-pressed={selectedVariant.id === v.id}
+                  />
+                ))}
+              </div>
+            </div>
+
             <p className="font-sans text-muted text-sm leading-relaxed mb-8 tracking-wide">
               {product.description[lang]}
             </p>
@@ -183,8 +211,8 @@ export default function Product() {
               </div>
             </div>
 
-            {/* Variant selector */}
-            <div className="mb-10">
+            {/* Variant selector — desktop only */}
+            <div className="mb-10 hidden lg:block">
               <p className="font-sans text-[10px] uppercase tracking-[0.25em] text-muted mb-4">
                 {t('catalogue.variants')} — <span className="text-dark normal-case">{selectedVariant.name[lang]}</span>
               </p>
@@ -192,12 +220,7 @@ export default function Product() {
                 {product.variants.map((v) => (
                   <button
                     key={v.id}
-                    onClick={() => {
-                      setSelectedVariant(v);
-                      if (window.innerWidth < 1024) {
-                        imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }}
+                    onClick={() => setSelectedVariant(v)}
                     title={v.name[lang]}
                     className={[
                       'w-8 h-8 rounded-full border-2 transition-all duration-200 hover:scale-110',

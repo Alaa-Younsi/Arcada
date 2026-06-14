@@ -512,7 +512,7 @@ export const PRODUCTS: CatalogueProduct[] = [
     size: '20×20 cm',
     finish: 'Hand-painted',
     variants: [
-      { id: 'azahra-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-AZH-001.jpg' },
+      { id: 'azahra-classic', name: { en: 'Classic', fr: 'Classic', ar: 'كلاسيك' }, hex: '#C9A84C', image: '/products/ARC-AZA-001.jpg' },
     ],
   },
 ];
