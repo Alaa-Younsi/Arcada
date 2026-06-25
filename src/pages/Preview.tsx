@@ -20,25 +20,25 @@ const ROOMS: RoomConfig[] = [
   {
     id: 'bathroom',
     label: { en: 'Bathroom', fr: 'Salle de bain', ar: 'الحمام' },
-    defaultImage: '/rooms/bathroom-default.jpg',
+    defaultImage: '/rooms/bathroom-default.jpg?v=2',
     Icon: Bath,
   },
   {
     id: 'living-room',
     label: { en: 'Living Room', fr: 'Salon', ar: 'غرفة المعيشة' },
-    defaultImage: '/rooms/living-room-default.jpg',
+    defaultImage: '/rooms/living-room-default.jpg?v=2',
     Icon: Sofa,
   },
   {
     id: 'bedroom',
     label: { en: 'Bedroom', fr: 'Chambre', ar: 'غرفة النوم' },
-    defaultImage: '/rooms/bedroom-default.jpg',
+    defaultImage: '/rooms/bedroom-default.jpg?v=2',
     Icon: BedDouble,
   },
   {
     id: 'kitchen',
     label: { en: 'Kitchen', fr: 'Cuisine', ar: 'المطبخ' },
-    defaultImage: '/rooms/kitchen-default.jpg',
+    defaultImage: '/rooms/kitchen-default.jpg?v=2',
     Icon: UtensilsCrossed,
   },
 ];
