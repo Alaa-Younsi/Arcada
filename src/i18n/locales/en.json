@@ -30,32 +30,9 @@
     "relatedProducts": "In the same collection"
   },
   "visualizer": {
-    "title": "Room Visualizer",
-    "subtitle": "Choose a product and color, then see it on your wall.",
-    "step1": "1 · Choose a collection",
-    "step2": "2 · Choose a product",
-    "step3": "3 · Choose a color",
-    "step4": "4 · Choose a zone",
-    "combine": "Combine colors",
-    "addToWall": "Apply to wall",
-    "addToFloor": "Apply to floor",
-    "addToAccent": "Apply to accent wall",
-    "reset": "Reset",
-    "download": "Save image",
-    "requestQuote": "Request a quote for this selection",
-    "selectedProducts": "Your selection",
-    "chooseRoom": "0 · Choose a room",
-    "rooms": {
-      "bathroom": "Bathroom",
-      "living-room": "Living Room",
-      "bedroom": "Bedroom",
-      "kitchen": "Kitchen"
-    },
-    "zone": {
-      "wall": "Main Wall",
-      "floor": "Floor",
-      "accent": "Accent Panel"
-    }
+    "title": "Space Visualizer",
+    "subtitle": "Choose a space and discover our tile combinations.",
+    "reset": "Reset"
   },
   "product": {
     "description": "Description",

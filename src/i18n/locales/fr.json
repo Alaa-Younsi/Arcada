@@ -30,32 +30,9 @@
     "relatedProducts": "Dans la même collection"
   },
   "visualizer": {
-    "title": "Visualiseur de Pièce",
-    "subtitle": "Choisissez un produit et une couleur, puis visualisez-le sur vos murs.",
-    "step1": "1 · Choisir une collection",
-    "step2": "2 · Choisir un produit",
-    "step3": "3 · Choisir une couleur",
-    "step4": "4 · Choisir une zone",
-    "combine": "Combiner les couleurs",
-    "addToWall": "Appliquer au mur",
-    "addToFloor": "Appliquer au sol",
-    "addToAccent": "Appliquer au mur accent",
-    "reset": "Réinitialiser",
-    "download": "Enregistrer l'image",
-    "requestQuote": "Demander un devis pour cette sélection",
-    "selectedProducts": "Votre sélection",
-    "chooseRoom": "0 · Choisir une pièce",
-    "rooms": {
-      "bathroom": "Salle de bain",
-      "living-room": "Salon",
-      "bedroom": "Chambre",
-      "kitchen": "Cuisine"
-    },
-    "zone": {
-      "wall": "Mur principal",
-      "floor": "Sol",
-      "accent": "Panneau accent"
-    }
+    "title": "Visualiseur d'Espace",
+    "subtitle": "Choisissez un espace et découvrez nos combinaisons de carreaux.",
+    "reset": "Réinitialiser"
   },
   "product": {
     "description": "Description",
